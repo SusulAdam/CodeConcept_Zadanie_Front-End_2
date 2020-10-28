@@ -10,7 +10,8 @@ class App extends Component {
   state = {
     productQuantity: 1,
     unitPrice: parseFloat( 11.90 ),
-    subTotal: parseFloat( 0 ),
+    subTotal: parseFloat( 11.90 ),
+    shipping: parseFloat( 23.80 )
   }
 
   addProductQuantity = () => {
@@ -25,6 +26,7 @@ class App extends Component {
     this.setState( prevState => {
       return ( { ...prevState, unitPrice: this.state.unitPrice - headPhonePrice, productQuantity: this.state.productQuantity - 1 } )
     } )
+    this.handleShipping()
   }
 
   handleSubTotal = () => {
@@ -33,14 +35,33 @@ class App extends Component {
     this.setState( {
       subTotal
     } )
+    this.handleShipping()
   }
 
-  
+  handleShipping = () => {
+    const freeShipping = 0
+    const costShipping = 23.8
+    if ( this.state.unitPrice >= 100 ) {
+      this.setState( {
+        shipping: freeShipping
+      } )
+    } else {
+      this.setState( {
+        shipping: costShipping
+      } )
+    }
+  }
 
-
+  grandTotal = () => {
+    let grandTotal;
+    grandTotal = parseFloat( this.state.shipping + this.state.subTotal )
+    return grandTotal.toFixed( 2 )
+  }
 
 
   render () {
+
+
     return (
       <>
         <main>
@@ -101,7 +122,8 @@ class App extends Component {
               <div class="orderSummary">
                 <div class="orderSummary__shipping-box">
                   <p class="orderSummary__shipping-subtitle">shipping</p>
-                  <p class="orderSummary__shipping-price">{ this.state.subTotal >= 100 ? "0.00$" : "$23.8" }</p>
+                  {/* <p class="orderSummary__shipping-price">{ this.state.subTotal >= 100 ? "0.00$" : "$23.8" }</p> */ }
+                  <p class="orderSummary__shipping-price">{ this.state.shipping !== 0 ? `$${ this.state.shipping }0` : `$${ this.state.shipping }.00` }</p>
                 </div>
                 <div class="orderSummary__cartTotal-subtitle-box">
                   <p class="orderSummary__cartTotal-subtitle">cart totals</p>
@@ -114,7 +136,7 @@ class App extends Component {
                     </div>
                     <div class="orderSummary__granTotal-box">
                       <p class="orderSummary__grandTotal-subtitle">Grand Total</p>
-                      <p class="orderSummary__grandTotal-price">$23.80</p>
+                      <p class="orderSummary__grandTotal-price">${ this.grandTotal() }</p>
                     </div>
                   </div>
                   <button class="orderSummary__checkout-cart">Proceed to checkout</button>
