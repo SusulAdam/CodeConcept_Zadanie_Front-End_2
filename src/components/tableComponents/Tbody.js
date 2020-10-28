@@ -4,29 +4,32 @@ import headPhones from "../../images/headphones.png";
 import xImg from "../../images/x-img.png";
 
 const Tbody = ( props ) => {
+
+    const { states, deleteProduct, subtractProductQuantity, addProductQuantity } = props
+
     return (
-        <tbody style={ props.states.subTotal < 1 ? { display: "none" } : { "": "" } }>
+        <tbody style={ states.subTotal < 1 ? { display: "none" } : { "": "" } }>
             <tr className="table-container__elements">
                 <td>
                     <img
-                        onClick={ props.deleteProduct }
+                        onClick={ deleteProduct }
                         className="table__container__close" src={ xImg } alt="close-button" />
                 </td>
                 <td>
                     <img className="table__container__headphones" src={ headPhones } alt="headphones" />
                 </td>
                 <td>Headphones</td>
-                <td>${ props.states.unitPrice.toFixed( 2 ) } </td>
+                <td>${ states.unitPrice.toFixed( 2 ) } </td>
                 <td>
                     <div className="table-container__items-box">
                         <button
-                            disabled={ props.states.productQuantity === 1 ? true : false }
-                            onClick={ props.subtractProductQuantity }
+                            disabled={ states.productQuantity === 1 ? true : false }
+                            onClick={ subtractProductQuantity }
                         >-</button>
 
-                        <p>{ props.states.productQuantity }</p>
+                        <p>{ states.productQuantity }</p>
                         <button
-                            onClick={ props.addProductQuantity }
+                            onClick={ addProductQuantity }
                         >+</button>
 
                         <img src={ editImg } alt="edit-png" />
