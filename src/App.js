@@ -11,7 +11,8 @@ class App extends Component {
     productQuantity: 1,
     unitPrice: parseFloat( 11.90 ),
     subTotal: parseFloat( 11.90 ),
-    shipping: parseFloat( 23.80 )
+    shipping: parseFloat( 23.80 ),
+    displayElements: "flex"
   }
 
   addProductQuantity = () => {
@@ -52,10 +53,30 @@ class App extends Component {
     }
   }
 
-  grandTotal = () => {
+  handleGrandTotal = () => {
     let grandTotal;
     grandTotal = parseFloat( this.state.shipping + this.state.subTotal )
     return grandTotal.toFixed( 2 )
+  }
+
+
+
+  handleProceedToCheckout = () => {
+    let displayElements;
+    displayElements = "none"
+    this.setState( {
+      displayElements
+    } )
+  }
+
+  handleAlert = () => {
+    alert( "Your order has been submitted successfully" )
+  }
+
+  combindedAlertProceedToCheckout = () => {
+    this.handleProceedToCheckout()
+    setTimeout( this.handleAlert, 100 );
+
   }
 
 
@@ -64,7 +85,7 @@ class App extends Component {
 
     return (
       <>
-        <main>
+        <main style={ { display: this.state.displayElements } }>
           <section className="shoppingCart">
             <div className="header-container">
               <h1 className="header-container__h1">Shopping Cart</h1>
@@ -136,10 +157,12 @@ class App extends Component {
                     </div>
                     <div class="orderSummary__granTotal-box">
                       <p class="orderSummary__grandTotal-subtitle">Grand Total</p>
-                      <p class="orderSummary__grandTotal-price">${ this.grandTotal() }</p>
+                      <p class="orderSummary__grandTotal-price">${ this.handleGrandTotal() }</p>
                     </div>
                   </div>
-                  <button class="orderSummary__checkout-cart">Proceed to checkout</button>
+                  <button
+                    onClick={ this.combindedAlertProceedToCheckout }
+                    class="orderSummary__checkout-cart">Proceed to checkout</button>
                 </div>
               </div>
 
