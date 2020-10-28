@@ -4,6 +4,8 @@ import headPhones from "./images/headphones.png";
 import xImg from "./images/x-img.png";
 import React, { Component } from 'react'
 import Thead from "./components/tableComponents/Thead"
+import HeaderShoppingCart from "./components/HeaderShoppingCart";
+import Tbody from "./components/tableComponents/Tbody";
 
 class App extends Component {
 
@@ -60,7 +62,6 @@ class App extends Component {
   }
 
 
-
   handleProceedToCheckout = () => {
     let displayElements;
     displayElements = "none"
@@ -96,17 +97,13 @@ class App extends Component {
       <>
         <main style={ { display: this.state.displayElements } }>
           <section className="shoppingCart">
-            <div className="header-container">
-              <h1 className="header-container__h1">Shopping Cart</h1>
-              <button
-                disabled={ this.state.subTotal > 0 ? false : true }
-                onClick={ this.combindedAlertProceedToCheckout } className="header-container__handleCheckout">Proceed to checkout</button>
-            </div>
+            <HeaderShoppingCart subTotal={ this.state.subTotal } combindedAlertProceedToCheckout={ this.combindedAlertProceedToCheckout } />
 
             <div className="main-container">
               <div className="table-container">
                 <table>
                   <Thead />
+
 
                   <tbody style={ this.state.subTotal < 1 ? { display: "none" } : { "": "" } }>
                     <tr className="table-container__elements">
